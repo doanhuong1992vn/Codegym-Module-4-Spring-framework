@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8">
+<head th:replace="/index :: head"></head>
+<body>
+<h1>Create new product</h1>
+<form th:action="@{/save}" th:object="${product}" method="post">
+    <table class="table table-striped">
+        <input hidden="hidden" type="text" th:field="*{id}">
+        <tr>
+            <td>Name</td>
+            <td><input type="text" th:field="*{name}"></td>
+        </tr>
+        <tr>
+            <td>Price</td>
+            <td><input type="number" step="any" th:field="*{price}"></td>
+        </tr>
+        <tr>
+            <td>Description</td>
+            <td><input type="text" th:field="*{description}"></td>
+        </tr>
+        <tr>
+            <td>Producer</td>
+            <td><input type="text" th:field="*{producer}"></td>
+        </tr>
+        <tr>
+            <td colspan="2"><button th:text="Create"></button></td>
+        </tr>
+    </table>
+</form>
+<div th:replace="/index :: script"></div>
+</body>
+</html>
