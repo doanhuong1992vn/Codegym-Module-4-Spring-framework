@@ -8,4 +8,10 @@ public interface IProductService {
     List<Product> getAll();
 
     void save(Product product);
+
+    Product getById(long id);
+
+    void delete(Product product);
+
+    List<Product> search(String search);
 }

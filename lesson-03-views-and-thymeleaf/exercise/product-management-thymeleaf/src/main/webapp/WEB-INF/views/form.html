@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="/index :: head"></head>
+<body>
+<div th:switch="${action}">
+    <h1 th:case="'create'">Create new product</h1>
+    <h1 th:case="'update'">Edit product</h1>
+    <h1 th:case="'delete'">Delete product</h1>
+    <h1 th:case="'view'">View product</h1>
+</div>
+<form th:action="@{${action}}" th:object="${product}" method="post">
+    <table class="table table-striped">
+        <tr>
+            <td>ID</td>
+            <td><span th:field="*{id}" th:text="*{id}"></span></td>
+        </tr>
+        <tr>
+            <td>Name</td>
+            <td>
+                <th:block th:if="${action} eq 'create' or ${action} eq 'update'">
+                    <input type="text" th:field="*{name}" required>
+                </th:block>
+                <th:block th:if="${action} eq 'delete' or ${action} eq 'view'">
+                    <input th:field="*{name}" th:readonly="*{name}">
+                </th:block>
+            </td>
+        </tr>
+        <tr>
+            <td>Price</td>
+            <td>
+                <th:block th:if="${action} eq 'create' or ${action} eq 'update'">
+                    <input type="number" step="any" th:field="*{price}" required>
+                </th:block>
+                <th:block th:if="${action} eq 'delete' or ${action} eq 'view'">
+                    <input th:field="*{price}" th:readonly="*{price}">
+                </th:block>
+            </td>
+        </tr>
+        <tr>
+            <td>Description</td>
+            <td>
+                <th:block th:if="${action} eq 'create' or ${action} eq 'update'">
+                    <input type="text" th:field="*{description}" required>
+                </th:block>
+                <th:block th:if="${action} eq 'delete' or ${action} eq 'view'">
+                    <input th:field="*{description}" th:readonly="*{description}">
+                </th:block>
+            </td>
+        </tr>
+        <tr>
+            <td>Producer</td>
+            <td>
+                <th:block th:if="${action} eq 'create' or ${action} eq 'update'">
+                    <input type="text" th:field="*{producer}" required>
+                </th:block>
+                <th:block th:if="${action} eq 'delete' or ${action} eq 'view'">
+                    <input th:field="*{producer}" th:readonly="*{producer}">
+                </th:block>
+            </td>
+        </tr>
+        <tr>
+            <td><button type="button"><a th:href="@{/}">Home Page</a></button></td>
+            <td>
+                <th:block th:unless="${action} eq 'view'">
+                    <button type="submit" th:text="${action.toUpperCase()}"></button>
+                </th:block>
+            </td>
+        </tr>
+    </table>
+</form>
+<div th:replace="/index :: script"></div>
+</body>
+</html>
