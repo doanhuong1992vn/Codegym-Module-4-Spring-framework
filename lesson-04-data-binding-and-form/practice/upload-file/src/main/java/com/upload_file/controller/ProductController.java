@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.util.List;
 
 @Controller
-@RequestMapping("/product")
 @PropertySource("classpath:upload_file.properties")
 public class ProductController {
     @Value("${file-upload}")
