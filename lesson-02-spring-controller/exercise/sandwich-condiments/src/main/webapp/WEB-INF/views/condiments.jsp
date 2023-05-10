@@ -6,8 +6,10 @@
 </head>
 <body>
 <h1>Condiments has chose</h1>
-<c:forEach items="${condiments}" var="condiment">
-    <p>${condiment}</p>
-</c:forEach>
+<ul>
+    <c:forEach items="${condiments}" var="condiment">
+        <li>${condiment}</li>
+    </c:forEach>
+</ul>
 </body>
 </html>
