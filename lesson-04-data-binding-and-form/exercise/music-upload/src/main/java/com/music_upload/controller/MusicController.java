@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -44,18 +45,14 @@ public class MusicController {
     }
 
     @PostMapping("save")
-    public String save(MusicForm musicForm, RedirectAttributes redirectAttributes) {
-        MultipartFile multipartFile = musicForm.getUrl();
-        String fileName = multipartFile.getOriginalFilename();
-        System.out.println(fileName);
-        try {
-            FileCopyUtils.copy(multipartFile.getBytes(), new File(musicUpload + fileName));
-        } catch (Exception e) {
-            System.out.println("Lỗi copy file");
-            e.printStackTrace();
+    public String save(MusicForm musicForm, RedirectAttributes redirectAttributes) throws IOException {
+        boolean isSaveSuccessfully = musicService.save(musicForm);
+        String message;
+        if (isSaveSuccessfully) {
+            message  = "Created " + musicForm.getName() + " successfully!";
+        } else {
+            message = "Type of file is invalid! Types of file is valid : .mp3, .wav, .ogg, .m4p";
         }
-        musicService.save(musicForm, fileName);
-        String message = "Created " + musicForm.getName() + " successfully!";
         redirectAttributes.addFlashAttribute("message",message);
         return "redirect:/create";
     }
