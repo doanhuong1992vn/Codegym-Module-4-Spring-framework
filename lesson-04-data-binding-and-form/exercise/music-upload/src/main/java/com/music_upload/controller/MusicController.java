@@ -51,7 +51,7 @@ public class MusicController {
         if (isSaveSuccessfully) {
             message  = "Created " + musicForm.getName() + " successfully!";
         } else {
-            message = "Type of file is invalid! Types of file is valid : .mp3, .wav, .ogg, .m4p";
+            message = "Type of file is invalid! Types of file are valid : .mp3, .wav, .ogg, .m4p";
         }
         redirectAttributes.addFlashAttribute("message",message);
         return "redirect:/create";
