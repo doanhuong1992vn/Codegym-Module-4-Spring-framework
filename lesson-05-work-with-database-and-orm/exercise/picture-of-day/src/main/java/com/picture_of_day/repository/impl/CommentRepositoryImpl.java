@@ -26,7 +26,8 @@ public class CommentRepositoryImpl implements CommentRepository {
 
     @Override
     public List<Comment> getAll() {
-        TypedQuery<Comment> query = entityManager.createQuery("from Comment", Comment.class);
+        TypedQuery<Comment> query = entityManager
+                .createQuery("FROM Comment WHERE DATE(postTime) = CURDATE()", Comment.class);
         return query.getResultList();
     }
 
