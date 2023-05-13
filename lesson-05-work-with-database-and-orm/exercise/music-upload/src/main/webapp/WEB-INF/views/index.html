@@ -18,6 +18,8 @@
         <th scope="col">SINGER</th>
         <th scope="col">GENRE MUSIC</th>
         <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
     </tr>
     </thead>
     <tbody th:each="song, state : ${musicList}">
@@ -29,8 +31,11 @@
         <td th:text="${song.genre}"></td>
         <td>
             <audio controls>
-                <source th:src="@{'/music/' + ${song.url}}" th:alt="${song.name}" type="audio/mp3">
+                <source th:src="@{'/music/' + ${song.url}}" th:alt="${song.name}" type="audio/mp3" src="">
             </audio>
+        </td>
+        <td>
+            <button><a th:href="@{/edit/{id}(id = ${song.id})}">EDIT</a></button>
         </td>
     </tr>
     </tbody>

@@ -84,6 +84,7 @@ public class AppConfiguration implements ApplicationContextAware, WebMvcConfigur
         resolver.setMaxUploadSizePerFile(52428800);
         return resolver;
     }
+
     //Cấu hình JPA
     @Bean
     @Qualifier(value = "entityManager")

@@ -8,6 +8,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -32,7 +33,7 @@ public class MusicController {
         return "index";
     }
 
-    @GetMapping("create")
+    @GetMapping("/create")
     public ModelAndView create() {
         ModelAndView modelAndView = new ModelAndView("create");
         modelAndView.addObject("musicForm", new MusicForm());
@@ -40,8 +41,8 @@ public class MusicController {
         return modelAndView;
     }
 
-    @PostMapping("save")
-    public String save(MusicForm musicForm, RedirectAttributes redirectAttributes) throws IOException {
+    @PostMapping("/save")
+    public String save(MusicForm musicForm, RedirectAttributes redirectAttributes) throws Exception {
         boolean isSaveSuccessfully = musicService.save(musicForm);
         String message;
         if (isSaveSuccessfully) {
@@ -51,5 +52,35 @@ public class MusicController {
         }
         redirectAttributes.addFlashAttribute("message", message);
         return "redirect:/create";
+    }
+
+    @GetMapping("/edit/{id}")
+    public ModelAndView edit(@PathVariable long id) throws Exception {
+        ModelAndView modelAndView = new ModelAndView("edit");
+        MusicForm musicForm = musicService.getByIdMusic(id);
+        modelAndView.addObject("musicForm", musicForm);
+        modelAndView.addObject("musicGenres", Arrays.stream(MusicGenres.values()).toList());
+        return modelAndView;
+    }
+    @PostMapping("/edit/update")
+    public ModelAndView update(MusicForm musicForm) throws Exception {
+        ModelAndView modelAndView = new ModelAndView("edit");
+        boolean isSaveSuccessfully = musicService.save(musicForm);
+        String message;
+        if (isSaveSuccessfully) {
+            message = "Updated " + musicForm.getName() + " successfully!";
+        } else {
+            message = "Update FAIL";
+        }
+        modelAndView.addObject("message", message);
+        modelAndView.addObject("musicForm", musicForm);
+        modelAndView.addObject("musicGenres", Arrays.stream(MusicGenres.values()).toList());
+        return modelAndView;
+    }
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable long id) {
+        musicService.delete(id);
+        return "redirect:/";
     }
 }
