@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/component/layout :: head"><title>#</title></head>
+<body>
+<nav th:replace="/component/layout :: navbar"></nav>
+<div class="container-fluid col-10 mt-5" th:each="post : ${postList}" th:object="${post}">
+    <div class="card mb-3" style="max-width: 540px;">
+        <div class="row no-gutters">
+            <div class="col-md-4">
+                <img th:src="*{image}" th:alt="*{title}" src="" alt="" class="card-img">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 th:text="*{title}" class="card-title">Card title</h5>
+                    <p th:text="*{summary}" class="card-text">Summary</p>
+<!--                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:replace="/component/layout :: script"></script>
+</body>
+</html>

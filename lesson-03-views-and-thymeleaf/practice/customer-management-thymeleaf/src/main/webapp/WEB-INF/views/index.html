@@ -28,9 +28,9 @@
         <td th:text="${customer.name}"></td>
         <td th:text="${customer.email}"></td>
         <td th:text="${customer.address}"></td>
-        <td><a th:href="@{customer/{id}/edit(id=${customer.id})}">Edit</a></td>
-        <td><a th:href="@{customer/{id}/delete(id=${customer.id})}">Delete</a></td>
-        <td><a th:href="@{customer/{id}/view(id=${customer.id})}">View</a></td>
+        <td><a th:href="@{customer/__${customer.id}__/edit}">Edit</a></td>
+        <td><a th:href="@{customer/__${customer.id}__/delete}">Delete</a></td>
+        <td><a th:href="@{customer/__${customer.id}__/view}">View</a></td>
     </tr>
     </tbody>
 </table>

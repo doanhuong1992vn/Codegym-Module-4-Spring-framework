@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/component/layout :: head">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container-fluid col-10 mt-5">
+<form th:action="@{/save}" th:object="${post}" method="post">
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input th:field="*{title}"
+                class="form-control" id="title" placeholder="Enter title" required>
+    </div>
+    <label for="basic-url">Image URL</label>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon3">https://example.com/image.jpg</span>
+        </div>
+        <input th:field="*{image}"
+               type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" required>
+    </div>
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Summary</span>
+        </div>
+        <textarea th:field="*{summary}"
+                  class="form-control" aria-label="With textarea" required></textarea>
+    </div>
+    <div class="form-group">
+        <label for="content">Content</label>
+        <textarea th:field="*{content}"
+                  class="form-control" id="content" rows="10"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">CREATE</button>
+</form>
+</div>
+<script th:replace="/component/layout :: script"></script>
+</body>
+</html>

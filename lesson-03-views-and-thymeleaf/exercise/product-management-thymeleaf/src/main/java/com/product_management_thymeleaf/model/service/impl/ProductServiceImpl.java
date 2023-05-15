@@ -47,14 +47,12 @@ public class ProductServiceImpl implements IProductService {
         lý do: sau khi truyền product từ controller qua view rồi nhận lại product từ view thì
         product trả về không có cùng địa chỉ tham chiếu với product truyền đi ban đầu nữa.
          */
-
     }
 
     @Override
     public List<Product> search(String search) {
         return products.stream()
-                .filter(product -> product.getName().toUpperCase()
-                                .contains(search.toUpperCase()))
+                .filter(product -> product.getName().toUpperCase().contains(search.toUpperCase()))
                 .collect(Collectors.toList());
     }
 }
