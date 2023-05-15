@@ -1,9 +1,6 @@
 package com.blog_application.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -12,9 +9,13 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name="image", nullable=false, length=1000)
     private String image;
+    @Column(name="title", nullable=false, length=100)
     private String title;
+    @Column(name="summary", nullable=false, length=500)
     private String summary;
+    @Column(name="content", nullable=false, length=3000)
     private String content;
     private LocalDateTime postTime;
 
@@ -74,7 +75,7 @@ public class Post {
         return postTime;
     }
 
-    public void setPostTime(Date postTime) {
+    public void setPostTime(LocalDateTime postTime) {
         this.postTime = postTime;
     }
 }

@@ -3,17 +3,19 @@
 <head th:replace="/component/layout :: head"><title>#</title></head>
 <body>
 <nav th:replace="/component/layout :: navbar"></nav>
-<div class="container-fluid col-10 mt-5" th:each="post : ${postList}" th:object="${post}">
-    <div class="card mb-3" style="max-width: 540px;">
+<div th:each="post : ${postList}" th:object="${post}" class="container-fluid col-10 mt-5">
+    <div class="card mb-3">
         <div class="row no-gutters">
             <div class="col-md-4">
+                <a th:href="@{/post/__${post.id}__}">
                 <img th:src="*{image}" th:alt="*{title}" src="" alt="" class="card-img">
+                </a>
             </div>
             <div class="col-md-8">
                 <div class="card-body">
-                    <h5 th:text="*{title}" class="card-title">Card title</h5>
+                    <h4 th:text="*{title}" class="card-title font-weight-bold">Card title</h4>
                     <p th:text="*{summary}" class="card-text">Summary</p>
-<!--                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
+                    <p th:text="'Posting Time: ' + *{postTime}" class="card-text"><small class="text-muted"></small></p>
                 </div>
             </div>
         </div>

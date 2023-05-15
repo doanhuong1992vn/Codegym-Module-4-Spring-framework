@@ -23,4 +23,9 @@ public class PostRepositoryImpl implements PostRepository {
     public void save(Post post) {
         entityManager.persist(post);
     }
+
+    @Override
+    public Post findById(Long id) {
+        return entityManager.find(Post.class, id);
+    }
 }

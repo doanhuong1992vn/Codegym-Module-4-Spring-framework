@@ -8,4 +8,6 @@ public interface PostService {
      List<Post> findAll();
 
      void save(Post post);
+
+    Post findById(Long id);
 }
