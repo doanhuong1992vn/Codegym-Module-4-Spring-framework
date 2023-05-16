@@ -40,4 +40,5 @@ public class PostRepositoryImpl implements PostRepository {
                 .setParameter("id", id)
                 .executeUpdate();
     }
+
 }
