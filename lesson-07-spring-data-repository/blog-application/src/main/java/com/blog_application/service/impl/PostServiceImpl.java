@@ -3,21 +3,19 @@ package com.blog_application.service.impl;
 import com.blog_application.entity.Post;
 import com.blog_application.repository.PostRepository;
 import com.blog_application.service.PostService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
 
-    public PostServiceImpl(PostRepository postRepository) {
-        this.postRepository = postRepository;
-    }
-
     @Override
-    public List<Post> findAll() {
+    public Iterable<Post> findAll() {
         return postRepository.findAll();
     }
 
@@ -28,13 +26,13 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Post findById(Long id) {
+    public Optional<Post> findById(Long id) {
         return postRepository.findById(id);
     }
 
     @Override
     public void delete(Long id) {
-        postRepository.delete(id);
+        postRepository.deleteById(id);
     }
 
     @Override

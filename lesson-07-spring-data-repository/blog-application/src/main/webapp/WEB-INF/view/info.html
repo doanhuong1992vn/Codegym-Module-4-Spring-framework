@@ -7,6 +7,9 @@
         <img th:src="*{image}" th:alt="*{title}" class="card-img-top" src="" alt="">
         <div class="card-body">
             <h5 th:text="*{title}" class="card-title">Card title</h5>
+            <p th:text="'Posting Time: ' + *{postTime}" th:value="*{postTime}" class="card-text post-time">
+                <small class="text-muted"></small>
+            </p>
             <pre th:text="*{content}" class="card-text"></pre>
             <div class="d-inline-flex justify-content-around col-12">
                 <a th:href="@{/edit/__${post.id}__}" class="btn btn-primary">Edit</a>
@@ -14,7 +17,16 @@
             </div>
         </div>
     </div>
-
 <script th:replace="/component/layout :: script"></script>
+<script>
+    document.onload = () => {
+        console.log('abc')
+        let postTimeNode = document.querySelector(".post-time");
+        console.log(postTimeNode);
+        let dateFormat = moment(postTimeNode.value, moment.ISO_8601).format("dd/MM/yyyy HH:mm a");
+        console.log(dateFormat);
+        postTimeNode.innerHTML = dateFormat;
+    }
+</script>
 </body>
 </html>
