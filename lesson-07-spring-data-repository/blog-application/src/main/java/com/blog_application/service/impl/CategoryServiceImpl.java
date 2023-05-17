@@ -4,8 +4,10 @@ import com.blog_application.entity.Category;
 import com.blog_application.repository.CategoryRepository;
 import com.blog_application.service.CategoryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 @Service

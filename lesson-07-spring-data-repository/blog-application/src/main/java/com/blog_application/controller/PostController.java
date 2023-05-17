@@ -1,23 +1,25 @@
 package com.blog_application.controller;
 
+import com.blog_application.entity.Category;
 import com.blog_application.entity.Post;
+import com.blog_application.service.CategoryService;
 import com.blog_application.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/post")
+//@SessionAttributes("categories")
 public class PostController {
     private final PostService postService;
+    private final CategoryService categoryService;
 
     @GetMapping("/create")
     public ModelAndView create() {
@@ -62,4 +64,8 @@ public class PostController {
         postService.update(post);
         return "redirect:/view/" + post.getId();
     }
+//    @ModelAttribute("categories")
+//    public Iterable<Category> getCategories() {
+//        return categoryService.findAll();
+//    }
 }

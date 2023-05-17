@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head th:fragment="head">
     <meta charset="UTF-8">
     <title>My Blog</title>
@@ -38,6 +38,20 @@
         </form>
     </div>
 </nav>
+<div class="container-fluid col-2 float-left h-100" th:fragment="sidebar">
+    <form th:action="@{/category/create}" th:object="${category}" method="post">
+        <fieldset>
+            <legend>Create new Category:</legend>
+            <label>Name:
+                <input th:field="*{name}" required>
+            </label>
+            <button>Create</button>
+        </fieldset>
+    </form>
+    <div th:each="category : ${session.categories}" th:object="${category}">
+        <a th:href="@{/category/__${category.id}__}" th:text="*{name}"></a>
+    </div>
+</div>
 <script th:fragment="script" type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.js">
 </script>
