@@ -5,7 +5,7 @@
 <nav th:replace="/component/layout :: navbar"></nav>
 <div class="container-fluid col-10 mt-5">
   <p th:if="${message}" th:text="${message}" class="h5 text-danger"></p>
-  <form th:action="@{/update}" th:object="${post}" method="post">
+  <form th:action="@{/post/update}" th:object="${post}" method="post">
     <div class="form-group ">
       <label for="title" class="h5 text-black">Title</label>
       <input th:field="*{title}" required title="Tối đa 100 ký tự" th:pattern="'^(.{1,100})$'"

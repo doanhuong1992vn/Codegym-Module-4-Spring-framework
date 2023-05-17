@@ -4,14 +4,5 @@ import com.blog_application.entity.Post;
 
 import java.util.Optional;
 
-public interface PostService {
-    Iterable<Post> findAll();
-
-    void save(Post post);
-
-    Optional<Post> findById(Long id);
-
-    void delete(Long id);
-
-    void update(Post post);
+public interface PostService extends GeneralService<Post>{
 }

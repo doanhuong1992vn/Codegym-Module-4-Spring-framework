@@ -7,26 +7,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/post")
 public class PostController {
     private final PostService postService;
-
-    @GetMapping
-    public ModelAndView index() {
-        ModelAndView modelAndView = new ModelAndView("index");
-        Iterable<Post> postList = postService.findAll();
-        modelAndView.addObject("postList", postList);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm a");
-        modelAndView.addObject("formatter", formatter);
-        return modelAndView;
-    }
 
     @GetMapping("/create")
     public ModelAndView create() {
@@ -38,16 +29,14 @@ public class PostController {
         postService.save(post);
         String message = "Created " + post.getTitle() + " successfully!";
         redirectAttributes.addFlashAttribute("message", message);
-        return "redirect:/create";
+        return "redirect:/post/create";
     }
 
-    @GetMapping("/post/{id}")
+    @GetMapping("/view/{id}")
     public ModelAndView view(@PathVariable Long id) {
         Optional<Post> post = postService.findById(id);
         if (post.isPresent()) {
             ModelAndView modelAndView = new ModelAndView("info");
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm a");
-            modelAndView.addObject("formatter", formatter);
             modelAndView.addObject("post", post.get());
             return modelAndView;
         } else {
@@ -71,6 +60,6 @@ public class PostController {
     @PostMapping("/update")
     public String update(Post post) {
         postService.update(post);
-        return "redirect:/post/" + post.getId();
+        return "redirect:/view/" + post.getId();
     }
 }
