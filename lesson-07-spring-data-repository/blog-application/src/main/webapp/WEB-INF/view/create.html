@@ -15,8 +15,9 @@
             </div>
             <select th:field="*{category}" class="form-select" aria-label="Default select example">
                 <option th:value="*{category}" th:text="*{category}" selected></option>
-                <option th:each="category : ${session.categories}" th:value="${category}"
-                        th:text="${category.name}"></option>
+                <th:block th:each="cate : ${session.categories}">
+                    <option th:value="${cate}" th:text="${cate}"></option>
+                </th:block>
             </select>
             <label for="basic-url" class="h5 text-black">Image URL</label>
             <div class="input-group mb-3">

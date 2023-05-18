@@ -7,17 +7,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequiredArgsConstructor
-//@RequestMapping("/category")
+@RequestMapping("/category")
 public class CategoryController {
     private final CategoryService categoryService;
     @PostMapping("/create")
-    public String create(Category category, HttpSession session) {
-        categoryService.save(category);
-        session.setAttribute("categories", categoryService.findAll());
-        return "redirect:/";
+    public String create(String nameCategory, HttpServletRequest request) {
+        categoryService.save(new Category(nameCategory));
+        request.getSession().setAttribute("categories", categoryService.findAll());
+        String referrer = request.getHeader("referer");
+        return "redirect:" + referrer;
     }
+
 }

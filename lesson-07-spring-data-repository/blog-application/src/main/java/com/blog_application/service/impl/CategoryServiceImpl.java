@@ -4,10 +4,8 @@ import com.blog_application.entity.Category;
 import com.blog_application.repository.CategoryRepository;
 import com.blog_application.service.CategoryService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 @Service
@@ -20,10 +18,12 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.findAll();
     }
 
+
     @Override
     public void save(Category category) {
         categoryRepository.save(category);
     }
+
 
     @Override
     public Optional<Category> findById(Long id) {

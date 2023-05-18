@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/post")
-//@SessionAttributes("categories")
+@SessionAttributes("categories")
 public class PostController {
     private final PostService postService;
     private final CategoryService categoryService;
@@ -49,8 +49,20 @@ public class PostController {
     @GetMapping("/edit/{id}")
     public ModelAndView edit(@PathVariable Long id) {
         Optional<Post> post = postService.findById(id);
-        return post.map(value -> new ModelAndView("edit", "post", value))
-                .orElseGet(() -> new ModelAndView("404"));
+        if (post.isPresent()) {
+            ModelAndView modelAndView = new ModelAndView("edit");
+            modelAndView.addObject("categoryList", categoryService.findAll());
+            modelAndView.addObject("blog", post.get());
+            return modelAndView;
+        } else {
+            return new ModelAndView("404");
+        }
+    }
+
+    @PostMapping("/update")
+    public String update(@ModelAttribute("blog") Post post) {
+        postService.update(post);
+        return "redirect:/post/view/" + post.getId();
     }
 
     @GetMapping("/delete/{id}")
@@ -59,13 +71,13 @@ public class PostController {
         return "redirect:/";
     }
 
-    @PostMapping("/update")
-    public String update(Post post) {
-        postService.update(post);
-        return "redirect:/view/" + post.getId();
+    @ModelAttribute("categories")
+    public Iterable<Category> getCategories(HttpServletRequest request) {
+        Iterable<Category> categories = (Iterable<Category>) request.getSession().getAttribute("categories");
+        if (categories == null) {
+            return categoryService.findAll();
+        } else {
+            return categories;
+        }
     }
-//    @ModelAttribute("categories")
-//    public Iterable<Category> getCategories() {
-//        return categoryService.findAll();
-//    }
 }
