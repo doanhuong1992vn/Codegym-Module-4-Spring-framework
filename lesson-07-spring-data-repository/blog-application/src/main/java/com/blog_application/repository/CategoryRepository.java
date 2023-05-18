@@ -1,10 +1,8 @@
 package com.blog_application.repository;
 
 import com.blog_application.entity.Category;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
-@Repository
-public interface CategoryRepository extends CrudRepository<Category, Long> {
+public interface CategoryRepository extends PagingAndSortingRepository<Category, Long> {
 
 }

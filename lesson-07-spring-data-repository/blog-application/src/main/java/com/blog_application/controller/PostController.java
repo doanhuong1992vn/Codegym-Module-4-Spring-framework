@@ -1,6 +1,5 @@
 package com.blog_application.controller;
 
-import com.blog_application.entity.Category;
 import com.blog_application.entity.Post;
 import com.blog_application.service.CategoryService;
 import com.blog_application.service.PostService;
@@ -10,13 +9,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/post")
-@SessionAttributes("categories")
 public class PostController {
     private final PostService postService;
     private final CategoryService categoryService;
@@ -37,30 +34,19 @@ public class PostController {
     @GetMapping("/view/{id}")
     public ModelAndView view(@PathVariable Long id) {
         Optional<Post> post = postService.findById(id);
-        if (post.isPresent()) {
-            ModelAndView modelAndView = new ModelAndView("info");
-            modelAndView.addObject("post", post.get());
-            return modelAndView;
-        } else {
-            return new ModelAndView("404");
-        }
+        return post.map(value -> new ModelAndView("info", "post", value))
+                .orElseGet(() -> new ModelAndView("404"));
     }
 
     @GetMapping("/edit/{id}")
     public ModelAndView edit(@PathVariable Long id) {
         Optional<Post> post = postService.findById(id);
-        if (post.isPresent()) {
-            ModelAndView modelAndView = new ModelAndView("edit");
-            modelAndView.addObject("categoryList", categoryService.findAll());
-            modelAndView.addObject("blog", post.get());
-            return modelAndView;
-        } else {
-            return new ModelAndView("404");
-        }
+        return post.map(value -> new ModelAndView("edit", "post", value))
+                .orElseGet(() -> new ModelAndView("404"));
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute("blog") Post post) {
+    public String update(@ModelAttribute("post") Post post) {
         postService.update(post);
         return "redirect:/post/view/" + post.getId();
     }
@@ -69,15 +55,5 @@ public class PostController {
     public String delete(@PathVariable Long id) {
         postService.delete(id);
         return "redirect:/";
-    }
-
-    @ModelAttribute("categories")
-    public Iterable<Category> getCategories(HttpServletRequest request) {
-        Iterable<Category> categories = (Iterable<Category>) request.getSession().getAttribute("categories");
-        if (categories == null) {
-            return categoryService.findAll();
-        } else {
-            return categories;
-        }
     }
 }

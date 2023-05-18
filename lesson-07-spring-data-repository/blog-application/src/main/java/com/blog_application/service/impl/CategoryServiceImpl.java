@@ -1,6 +1,7 @@
 package com.blog_application.service.impl;
 
 import com.blog_application.entity.Category;
+import com.blog_application.entity.Post;
 import com.blog_application.repository.CategoryRepository;
 import com.blog_application.service.CategoryService;
 import lombok.RequiredArgsConstructor;
@@ -39,4 +40,5 @@ public class CategoryServiceImpl implements CategoryService {
     public void update(Category category) {
         categoryRepository.save(category);
     }
+
 }

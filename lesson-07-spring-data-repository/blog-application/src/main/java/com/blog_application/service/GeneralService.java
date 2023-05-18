@@ -1,8 +1,5 @@
 package com.blog_application.service;
 
-import com.blog_application.entity.Post;
-import org.springframework.data.repository.PagingAndSortingRepository;
-
 import java.util.Optional;
 
 public interface GeneralService<T> {

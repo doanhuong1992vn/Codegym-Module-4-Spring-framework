@@ -4,25 +4,22 @@
 <body>
 <nav th:replace="/component/layout :: navbar"></nav>
 <div class="container-fluid col-12">
+    <div class="row">
     <div th:replace="/component/layout :: sidebar"></div>
-    <div class="container-fluid col-10 mt-5">
+    <div class="container-fluid col-10 mt-5 float-left">
         <p th:if="${message}" th:text="${message}" class="h5 text-danger"></p>
-        <form th:action="@{/post/update}" th:object="${blog}" method="post">
+        <form th:action="@{/post/update}" th:object="${post}" method="post">
             <div class="form-group">
                 <label for="title" class="h5 text-black">Title</label>
                 <input th:field="*{title}" required title="Tối đa 100 ký tự" th:pattern="'^(.{1,100})$'"
                        class="form-control" id="title" placeholder="Enter title">
             </div>
             <div class="form-group">
-                <label class="h5 text-black">Category
+                <label class="h5 text-black w-100">Category
                     <select th:field="*{category}" class="form-select">
-                        <option th:value="*{category}" th:text="${blog.category}" selected></option>
-                        <th:block th:each="cate : ${categoryList}">
-                            <option th:value="${cate.id}" th:text="${cate}"></option>
-                        </th:block>
-<!--                        <option th:each="cate : ${categoryList}"-->
-<!--                                th:value="${cate.id}"-->
-<!--                                th:text="${cate.name}">-->
+                        <option th:value="*{category.id}" th:text="${post.category}" selected></option>
+                        <option th:each="cate : ${session.categories}" th:value="${cate.id}"
+                                th:text="${cate.name}"></option>
                     </select>
                 </label>
             </div>
@@ -51,7 +48,11 @@
             <button type="submit" class="btn btn-primary">UPDATE</button>
         </form>
     </div>
+    </div>
+    <div class="row mt-5">
+        <footer th:replace="/component/layout :: footer"></footer>
+    </div>
 </div>
-<script th:replace="/component/layout :: script"></script>
+<div th:replace="/component/layout :: script"></div>
 </body>
 </html>
