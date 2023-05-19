@@ -1,11 +1,18 @@
 package com.blog_application.controller;
 
 import com.blog_application.entity.Post;
-import com.blog_application.service.CategoryService;
 import com.blog_application.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -54,5 +61,16 @@ public class PostController {
     public String delete(@PathVariable Long id) {
         postService.delete(id);
         return "redirect:/";
+    }
+
+    @GetMapping("/search")
+    public ModelAndView search(String query, @PageableDefault(size = 2) Pageable pageable) {
+        Sort sort = Sort.by("postTime").descending();
+        Pageable pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
+        Page<Post> postList = postService.findAllByTitleContaining(query, pageRequest);
+        ModelAndView modelAndView = new ModelAndView("search");
+        modelAndView.addObject("query", query);
+        modelAndView.addObject("postList", postList);
+        return modelAndView;
     }
 }

@@ -113,5 +113,4 @@ public class AppConfiguration implements ApplicationContextAware, WebMvcConfigur
         properties.setProperty("hibernate.show_sql", "true");
         return properties;
     }
-
 }

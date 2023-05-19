@@ -44,11 +44,6 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Iterable<Post> findAllByCategory(Category category) {
-        return postRepository.findAllByCategory(category);
-    }
-
-    @Override
     public Page<Post> findAll(Pageable pageable) {
         return postRepository.findAll(pageable);
     }
@@ -56,5 +51,10 @@ public class PostServiceImpl implements PostService {
     @Override
     public Page<Post> findAllByCategory(Category category, Pageable pageable) {
         return postRepository.findAllByCategory(category, pageable);
+    }
+
+    @Override
+    public Page<Post> findAllByTitleContaining(String query, Pageable pageRequest) {
+        return postRepository.findAllByTitleContaining(query, pageRequest);
     }
 }

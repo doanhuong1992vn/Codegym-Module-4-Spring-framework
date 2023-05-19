@@ -6,10 +6,15 @@ import com.blog_application.service.CategoryService;
 import com.blog_application.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,20 +37,20 @@ public class CategoryController {
     }
 
     @GetMapping("/view/{id}/posts")
-    public ModelAndView view(@PathVariable Long id,@PageableDefault(size=1) Pageable pageable) {
+    public ModelAndView view(@PathVariable Long id, @PageableDefault(size = 2) Pageable pageable) {
         Optional<Category> category = categoryService.findById(id);
         return category.map(value -> {
                     ModelAndView modelAndView = new ModelAndView("posts-by-category");
-//                    Iterable<Post> postList = postService.findAllByCategory(value);
-                    Page<Post> postList = postService.findAllByCategory(value, pageable);
-                    modelAndView.addObject( "postList", postList);
-                    String nameCategory = "Danh mục " + value.getName() + ":";
-                    modelAndView.addObject("nameCategory", nameCategory);
+                    Sort sort = Sort.by("postTime").descending();
+                    Pageable pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
+                    Page<Post> postList = postService.findAllByCategory(value, pageRequest);
+                    modelAndView.addObject("postList", postList);
                     modelAndView.addObject("category", value);
                     return modelAndView;
                 })
                 .orElseGet(() -> new ModelAndView("404"));
     }
+
     @GetMapping("/edit/{id}")
     public ModelAndView edit(@PathVariable Long id) {
         Optional<Category> category = categoryService.findById(id);

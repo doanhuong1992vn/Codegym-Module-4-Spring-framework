@@ -6,8 +6,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface PostService extends GeneralService<Post> {
-    Iterable<Post> findAllByCategory(Category value);
     Page<Post> findAll(Pageable pageable);
+
     Page<Post> findAllByCategory(Category value, Pageable pageable);
 
+    Page<Post> findAllByTitleContaining(String query, Pageable pageRequest);
 }

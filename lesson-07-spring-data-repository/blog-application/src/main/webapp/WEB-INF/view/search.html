@@ -7,10 +7,9 @@
     <div class="row">
         <div th:replace="/component/layout :: sidebar"></div>
         <div class="container-fluid col-10 float-left">
-            <p th:text="${postList.isEmpty()} ?
-             'Danh mục ' + ${category.name} + ' chưa có bài viết nào.' :
-              'Danh mục ' + ${category.name} + ':'"
-               class="h4 mt-3 ml-5"></p>
+            <p th:text="${postList.isEmpty()} ? 'Không tìm thấy bài viết với từ khóa ' + ${query}"
+               class="h4 mt-3 ml-5">
+            </p>
             <div th:each="post : ${postList}" th:object="${post}" class="container-fluid col-10 mt-5">
                 <div class="card mb-3">
                     <div class="row no-gutters">
@@ -32,16 +31,11 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <a th:href="@{/category/edit/__${category.id}__}" class="mt-3 ml-5">
-                    <button type="button" class="btn btn-primary">Edit Category</button>
-                </a>
-            </div>
             <div class="container-fluid col-10 mt-5 d-inline-flex justify-content-center">
-                <a th:href="@{/category/view/__${category.id}__/posts(page=${postList.number - 1})}"
+                <a th:href="@{/post/search(query=${query}, page=${postList.number - 1})}"
                    th:if="${postList.hasPrevious()}">Previous</a>
                 <span th:text="${postList.number + 1}"></span>/<span th:text="${postList.totalPages}"></span>
-                <a th:href="@{/category/view/__${category.id}__/posts(page=${postList.number + 1})}"
+                <a th:href="@{/post/search(query=${query}, page=${postList.number + 1})}"
                    th:if="${postList.hasNext()}">Next</a>
             </div>
         </div>
