@@ -43,18 +43,18 @@
     </div>
 </nav>
 <div th:fragment="sidebar" class="container-fluid col-2 float-left h-100">
-    <fieldset class="m-3 mb-5 mt-5">
+    <fieldset class="m-3 mb-5 mt-5 w-auto">
         <legend class="h6">Create new Category:</legend>
         <form th:action="@{/category/create}" method="post">
             <label>Name :
-                <input name="nameCategory" type="text" required>
+                <input name="nameCategory" type="text" class="w-100" required>
             </label>
-            <button>Create</button>
+            <button class="btn btn-primary">Create</button>
         </form>
     </fieldset>
     <ul class="list-group mt-5">
         <li class="list-group-item active">Categories: </li>
-        <a th:each="category : ${session.categories}" th:href="@{/category/__${category.id}__/posts}">
+        <a th:each="category : ${session.categories}" th:href="@{/category/view/__${category.id}__/posts}">
             <li th:text="${category.name}" class="list-group-item"></li>
         </a>
     </ul>

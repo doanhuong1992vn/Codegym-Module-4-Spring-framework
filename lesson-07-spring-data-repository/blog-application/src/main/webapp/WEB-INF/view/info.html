@@ -10,7 +10,7 @@
             <img th:src="*{image}" th:alt="*{title}" class="card-img-top" src="" alt="">
             <div class="card-body">
                 <h5 th:text="*{title}" class="card-title">Card title</h5>
-                <p th:text="'Danh mục: ' + ${post.category.name}" class="card-text h6"></p>
+                <p th:text="'Danh mục: ' + ${post.category}" class="card-text h6"></p>
                 <p th:text="*{postTime}" class="card-text post-time"></p>
                 <pre th:text="*{content}" class="card-text"></pre>
                 <div class="d-inline-flex justify-content-around col-12">

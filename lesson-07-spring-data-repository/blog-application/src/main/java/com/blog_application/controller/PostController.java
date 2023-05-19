@@ -16,7 +16,6 @@ import java.util.Optional;
 @RequestMapping("/post")
 public class PostController {
     private final PostService postService;
-    private final CategoryService categoryService;
 
     @GetMapping("/create")
     public ModelAndView create() {
@@ -46,7 +45,7 @@ public class PostController {
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute("post") Post post) {
+    public String update(Post post) {
         postService.update(post);
         return "redirect:/post/view/" + post.getId();
     }

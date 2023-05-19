@@ -5,6 +5,8 @@ import com.blog_application.entity.Post;
 import com.blog_application.repository.PostRepository;
 import com.blog_application.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -44,5 +46,15 @@ public class PostServiceImpl implements PostService {
     @Override
     public Iterable<Post> findAllByCategory(Category category) {
         return postRepository.findAllByCategory(category);
+    }
+
+    @Override
+    public Page<Post> findAll(Pageable pageable) {
+        return postRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<Post> findAllByCategory(Category category, Pageable pageable) {
+        return postRepository.findAllByCategory(category, pageable);
     }
 }
