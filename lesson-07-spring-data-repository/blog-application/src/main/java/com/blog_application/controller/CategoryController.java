@@ -32,8 +32,8 @@ public class CategoryController {
     public String create(String nameCategory, HttpServletRequest request) {
         categoryService.save(new Category(nameCategory));
         request.getSession().setAttribute("categories", categoryService.findAll());
-        String referrer = request.getHeader("referer");
-        return "redirect:" + referrer;
+        String referer = request.getHeader("referer");
+        return "redirect:" + referer;
     }
 
     @GetMapping("/view/{id}/posts")
