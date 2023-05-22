@@ -13,15 +13,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Service
 public class MusicServiceImpl implements MusicService {
-    private static final Set<String> fileTypes = new HashSet<>(List.of(new String[]{".mp3", ".m4p", ".ogg", ".wav"}));
+    private static final Set<String> fileTypes = new HashSet<>(Arrays.asList(".mp3", ".m4p", ".ogg", ".wav"));
     @Value("${music-upload}")
     private String musicUpload;
     private final MusicRepository musicRepository;

@@ -1,5 +1,6 @@
 package com.picture_of_day.service.impl;
 
+import com.picture_of_day.exception.DirtyWordException;
 import com.picture_of_day.model.Comment;
 import com.picture_of_day.repository.CommentRepository;
 import com.picture_of_day.service.CommentService;
@@ -7,7 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Optional;
 
@@ -17,9 +20,13 @@ public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
 
     @Override
-    public void save(Comment comment) {
+    public void save(Comment comment, BindingResult bindingResult) throws DirtyWordException {
         comment.setLikes(0);
-        comment.setPostTime(new Date());
+        comment.setPostTime(LocalDateTime.now());
+        new Comment().validate(comment, bindingResult);
+        if (bindingResult.hasErrors()) {
+            throw new DirtyWordException(comment);
+        }
         commentRepository.save(comment);
     }
 
