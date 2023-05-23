@@ -49,7 +49,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Page<Post> findAllByCategory(Category category, Pageable pageable) {
+    public Page<Post> findByCategory(Category category, Pageable pageable) {
         return postRepository.findAllByCategory(category, pageable);
     }
 

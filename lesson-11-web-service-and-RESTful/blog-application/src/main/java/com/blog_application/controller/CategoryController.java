@@ -43,7 +43,7 @@ public class CategoryController {
                     ModelAndView modelAndView = new ModelAndView("posts-by-category");
                     Sort sort = Sort.by("postTime").descending();
                     Pageable pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
-                    Page<Post> postList = postService.findAllByCategory(value, pageRequest);
+                    Page<Post> postList = postService.findByCategory(value, pageRequest);
                     modelAndView.addObject("postList", postList);
                     modelAndView.addObject("category", value);
                     return modelAndView;

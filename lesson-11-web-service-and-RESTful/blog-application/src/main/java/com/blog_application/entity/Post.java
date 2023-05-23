@@ -1,6 +1,7 @@
 package com.blog_application.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties(value = "category")
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,10 +31,10 @@ public class Post {
     @Column(name = "content", nullable = false, length = 3000)
     private String content;
     @Column
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss a")
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     private LocalDateTime postTime;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
 }

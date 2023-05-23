@@ -1,5 +1,6 @@
 package com.blog_application.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,7 @@ import java.util.Collection;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties(value = "posts")
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
