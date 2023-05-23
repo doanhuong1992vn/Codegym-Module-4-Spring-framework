@@ -6,32 +6,30 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
-    @NotBlank(message = "{notBlank}")
-    @Size(min = 2, max = 15, message = "{sizeName}")
-    @Pattern(regexp = "^[\\p{L} .'-]+$", message = "{patternName}")
+    @NotBlank(message = "{NotBlank.user}")
+    @Size(min = 2, max = 20, message = "{Size.user.name}")
+    @Pattern(regexp = "^[\\p{L} .'-]+$", message = "{Pattern.user.name}")
     private String firstName;
-    @NotBlank(message = "{notBlank}")
-    @Size(min = 2, max = 15, message = "{sizeName}")
-    @Pattern(regexp = "^[\\p{L} .'-]+$", message = "{patternName}")
+    @NotBlank(message = "{NotBlank.user}")
+    @Size(min = 2, max = 20, message = "{Size.user.name}")
+    @Pattern(regexp = "^[\\p{L} .'-]+$", message = "{Pattern.user.name}")
     private String lastName;
-    @NotBlank(message = "{notBlank}")
+    @NotBlank(message = "{NotBlank.user}")
     @Size(min = 10, max = 11)
     @Pattern(regexp = "^(0[3|5|7|8|9])+([0-9]{8})$")
     private String phoneNumber;
-    @NotNull(message = "{notBlank}")
+    @NotNull(message = "{NotBlank.user}")
     @Range(min = 18, max = 110)
     private int age;
-    @NotBlank(message = "{notBlank}")
+    @NotBlank(message = "{NotBlank.user}")
+    @Email(message = "{Pattern.user.email}")
     @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")
     private String email;
 }
