@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/component/layout :: head"><title>#</title></head>
+<body>
+<nav th:replace="/component/layout :: navbar"></nav>
+<div class="container-fluid col-12">
+    <div class="row">
+        <div th:replace="/component/layout :: sidebar"></div>
+        <div th:object="${city}" class="card container-fluid col-10 mt-5 float-left">
+            <img th:src="*{image}" th:alt="*{name}" class="card-img-top" src="" alt="">
+            <div class="card-body">
+                <h5 th:text="*{name}" class="card-title">Card title</h5>
+                <p th:text="'Quốc gia: ' + ${city.country}" class="card-text h6"></p>
+                <p th:text="'Diện tích: ' + *{area} + ' km2'" class="card-text"></p>
+                <p th:text="'Dân số: ' + *{population} + ' người'" class="card-text"></p>
+                <p th:text="'GDP: ' + *{gdp} + ' tỉ đồng'" class="card-text"></p>
+                <pre th:text="*{description}" class="card-text --font-family-sans-serif"></pre>
+                <div class="d-inline-flex justify-content-around col-12">
+                    <a th:href="@{/city/edit/__${city.id}__}" class="btn btn-primary">Edit</a>
+                    <a th:href="@{/city/delete/__${city.id}__}" class="btn btn-primary">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <footer th:replace="/component/layout :: footer"></footer>
+    </div>
+</div>
+<script th:replace="/component/layout :: script"></script>
+</body>
+</html>

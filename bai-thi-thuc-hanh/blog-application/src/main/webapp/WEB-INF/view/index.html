@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/component/layout :: head"><title>#</title></head>
+<body>
+<nav th:replace="/component/layout :: navbar"></nav>
+<div class="container-fluid col-12">
+    <div class="row">
+        <div th:replace="/component/layout :: sidebar"></div>
+        <div class="container-fluid col-10 float-left min-vh-100">
+            <p th:text="${cities.isEmpty()} ? 'You have not created any cities yet!' : 'All cities:'"
+               class="h4 mt-3 ml-5"></p>
+            <div th:fragment="card-loop" th:each="city : ${cities}" th:object="${city}"
+                 class="container-fluid col-10 mt-5">
+                <div class="card mb-3">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <a th:href="@{/city/view/__${city.id}__}">
+                                <img th:src="*{image}" th:alt="*{name}" src="" alt="" class="card-img">
+                            </a>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <a th:href="@{/city/view/__${city.id}__}">
+                                    <h4 th:text="*{name}" class="card-title font-weight-bold">Card title</h4>
+                                </a>
+                                <p th:text="'Quốc gia: ' + ${city.country}" class="card-text h6"></p>
+                                <p th:text="*{description}" class="card-text">Population</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid col-10 mt-5 d-inline-flex justify-content-center">
+                <a th:href="@{/(page=${cities.number - 1})}" th:if="${cities.hasPrevious()}">Previous</a>
+                <span th:text="${cities.number + 1}"></span>/<span th:text="${cities.totalPages}"></span>
+                <a th:href="@{/(page=${cities.number + 1})}" th:if="${cities.hasNext()}">Next</a>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <footer th:replace="/component/layout :: footer"></footer>
+    </div>
+</div>
+<script th:replace="/component/layout :: script"></script>
+<!--<script th:fragment="format-by-moment">-->
+<!--    const postTimeNodes = document.querySelectorAll(".city-time");-->
+<!--    for (let element of postTimeNodes) {-->
+<!--        element.innerHTML = moment(element.innerHTML, moment.ISO_8601)-->
+<!--            .format("[Ngày đăng:] dddd, DD/MM/YYYY hh:mm:ss a");-->
+<!--    }-->
+<!--</script>-->
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/component/layout :: head"><title>#</title></head>
+<body>
+<nav th:replace="/component/layout :: navbar"></nav>
+<div class="container-fluid col-12">
+    <div class="row">
+        <div th:replace="/component/layout :: sidebar"></div>
+        <div class="container-fluid col-10 mt-5 float-left">
+            <p th:if="${message}" th:text="${message}" class="h5 text-danger"></p>
+            <form th:action="@{/city/update}" th:object="${city}" method="post">
+                <div class="form-group">
+                    <label for="title" class="h5 text-black">City Name</label>
+                    <input th:field="*{name}" required title="Tối đa 100 ký tự" th:pattern="'^(.{1,100})$'"
+                           class="form-control" id="title" placeholder="Enter title">
+                </div>
+                <div class="form-group">
+                    <label class="h5 text-black w-100">Country
+                        <select th:field="*{country}" class="form-select">
+                            <option th:value="*{country.id}" th:text="${city.country}" selected></option>
+                            <option th:each="cate : ${session.countries}" th:value="${cate.id}"
+                                    th:text="${cate.name}"></option>
+                        </select>
+                    </label>
+                </div>
+                <label for="basic-url" class="h5 text-black">Image URL</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon3">https://example.com/image.jpg</span>
+                    </div>
+                    <input th:field="*{image}" title="Tối đa 1000 ký tự" th:pattern="'^(.{1,1000})$'"
+                           type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+                </div>
+
+                <div class="form-group">
+                    <label for="area" class="h5 text-black">Area</label>
+                    <input th:field="*{area}" type="number" step="any"
+                           class="form-control" id="area" placeholder="Enter area">
+                </div>
+
+                <div class="form-group">
+                    <label for="population" class="h5 text-black">Population</label>
+                    <input th:field="*{population}" type="number"
+                           class="form-control" id="population" placeholder="Enter population">
+                </div>
+
+                <div class="form-group">
+                    <label for="gdp" class="h5 text-black">GDP</label>
+                    <input th:field="*{gdp}" type="number"
+                           class="form-control" id="gdp" placeholder="Enter gdp">
+                </div>
+
+                <div class="form-group mt-3">
+                    <label for="description" class="h5 text-black">Description</label>
+                    <textarea th:field="*{description}" title="Tối đa 3000 ký tự"
+                              class="form-control" id="description" rows="10"></textarea>
+                </div>
+                <input hidden="hidden" th:field="*{id}" th:value="*{id}">
+                <button type="submit" class="btn btn-primary">UPDATE</button>
+            </form>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <footer th:replace="/component/layout :: footer"></footer>
+    </div>
+</div>
+<div th:replace="/component/layout :: script"></div>
+</body>
+</html>
